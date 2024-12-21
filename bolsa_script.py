@@ -19,7 +19,6 @@ S3_RAW_PREFIX = "bolsa_bovespa/raw"
 
 AWS_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY_ID", "your_access_key_id")
 AWS_SECRET_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "your_secret_access_key")
-AWS_SESSION_TOKEN = os.getenv("AWS_SESSION_TOKEN", None)
 
 
 def init_webdriver():
@@ -142,8 +141,7 @@ def upload_to_s3(file_path, s3_prefix, date_partition, is_parquet=False):
             "s3",
             region_name=S3_REGION,
             aws_access_key_id=AWS_ACCESS_KEY,
-            aws_secret_access_key=AWS_SECRET_KEY,
-            aws_session_token=AWS_SESSION_TOKEN
+            aws_secret_access_key=AWS_SECRET_KEY
         )
 
         partition = f"data_carteira={date_partition}"

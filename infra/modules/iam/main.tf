@@ -33,7 +33,7 @@ resource "aws_iam_role" "tech_role" {
 # Política associada à techRole
 resource "aws_iam_policy" "tech_role_policy" {
   name        = var.role_policy_name
-  description = "Permite acesso genérico ao S3 (será atualizado após criação do bucket)"
+  description = "Permite acesso restrito ao bucket ${var.bucket_name}"
 
   policy = jsonencode({
     Version = "2012-10-17",
@@ -41,13 +41,17 @@ resource "aws_iam_policy" "tech_role_policy" {
       {
         Effect   = "Allow",
         Action   = ["s3:ListBucket", "s3:GetObject", "s3:PutObject"],
-        Resource = "*"
+        Resource = [
+          "arn:aws:s3:::${var.bucket_name}",
+          "arn:aws:s3:::${var.bucket_name}/*"
+        ]
       }
     ]
   })
+
+  depends_on = [aws_s3_bucket.bucket]
 }
 
-# Vinculação da política à techRole
 resource "aws_iam_role_policy_attachment" "attach_s3_policy" {
   role       = aws_iam_role.tech_role.name
   policy_arn = aws_iam_policy.tech_role_policy.arn
