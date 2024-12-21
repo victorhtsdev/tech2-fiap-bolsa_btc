@@ -22,7 +22,7 @@ jobs:
 
   destroy:
     needs: set-env
-    if: env.action ==  'destroy'
+    if: needs.set-env.outputs.action == 'destroy'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -54,7 +54,7 @@ jobs:
 
   apply:
     needs: set-env
-    if: env.action == 'apply'
+    if: needs.set-env.outputs.action == 'apply'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
