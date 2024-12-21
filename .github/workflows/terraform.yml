@@ -21,7 +21,7 @@ jobs:
         id: read_action
         run: |
           ACTION=$(cat terraform_action.txt)
-          echo "action=${ACTION}" >> $GITHUB_ENV
+          echo "::set-output name=action::${ACTION}"
 
   destroy:
     needs: set-env
