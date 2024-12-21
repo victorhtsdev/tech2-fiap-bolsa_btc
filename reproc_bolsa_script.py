@@ -63,10 +63,8 @@ def preprocess_csv(file_path):
         with open(file_path, "r", encoding="latin-1") as f:
             lines = f.readlines()
 
-        # Remove first line and last two lines
         lines = lines[1:-2]
 
-        # Clean up each line
         lines = [line.rstrip(";\n") + "\n" for line in lines]
 
         processed_file_path = file_path.replace(".csv", "_processed.csv")
