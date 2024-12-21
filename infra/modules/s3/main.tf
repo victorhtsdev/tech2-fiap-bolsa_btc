@@ -6,6 +6,9 @@ resource "aws_s3_bucket" "bucket" {
   # Forçar exclusão dos objetos antes de destruir o bucket
   force_destroy = true
 
+  # Especificar a região
+  region = var.region
+
   tags = {
     Name        = var.bucket_name
     Environment = "Development"
@@ -34,30 +37,19 @@ resource "aws_s3_bucket_policy" "bucket_policy" {
         }
       },
       {
-        # Permitir acesso ao grupo Admins
+        # Permitir acesso à política IAM fornecida
         Effect = "Allow",
-        Principal = {
-          AWS = [
-            "arn:aws:iam::${data.aws_caller_identity.current.account_id}:group/Admins"
-          ]
-        },
-        Action = ["s3:GetObject", "s3:PutObject", "s3:ListBucket"],
-        Resource = [
+        Principal = "*",
+        Action    = ["s3:GetObject", "s3:PutObject", "s3:ListBucket"],
+        Resource  = [
           "${aws_s3_bucket.bucket.arn}",
           "${aws_s3_bucket.bucket.arn}/*"
-        ]
-      },
-      {
-        # Permitir acesso à role techRole
-        Effect = "Allow",
-        Principal = {
-          AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/techRole"
-        },
-        Action = ["s3:GetObject", "s3:PutObject", "s3:ListBucket"],
-        Resource = [
-          "${aws_s3_bucket.bucket.arn}",
-          "${aws_s3_bucket.bucket.arn}/*"
-        ]
+        ],
+        Condition = {
+          StringEquals: {
+            "aws:PolicyArn": var.role_policy_name
+          }
+        }
       }
     ]
   })

@@ -15,3 +15,9 @@ variable "region" {
   type        = string
   default     = "us-east-1"
 }
+
+variable "role_policy_name" {
+  description = "Nome da política da Role IAM"
+  type        = string
+  default     = "TechRoleS3AccessPolicy"
+}
