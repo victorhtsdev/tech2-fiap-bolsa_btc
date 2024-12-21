@@ -18,11 +18,11 @@ jobs:
         id: read_action
         run: |
           ACTION=$(cat terraform_action.txt)
-          echo "::set-output name=action::${ACTION}"
+          echo "action=${ACTION}" >> $GITHUB_OUTPUT
 
   destroy:
     needs: set-env
-    if: needs.set-env.outputs.action == 'destroy'
+    if: env.action ==  'destroy'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -54,7 +54,7 @@ jobs:
 
   apply:
     needs: set-env
-    if: needs.set-env.outputs.action == 'apply'
+    if: env.action == 'apply'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
