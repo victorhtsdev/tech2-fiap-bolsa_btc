@@ -10,11 +10,6 @@ variable "prefix" {
   default     = "bolsa_bovespa/raw"
 }
 
-variable "region" {
-  description = "Região do bucket S3"
-  type        = string
-  default     = "us-east-1"
-}
 
 variable "role_policy_name" {
   description = "Nome da política da Role IAM"
