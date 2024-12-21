@@ -3,7 +3,10 @@ name: Terraform Workflow
 on:
   push:
     branches:
-      - main  
+      - main
+    paths:
+      - 'infra/**'
+      - '.github/workflows/**'
 
 jobs:
   set-env:

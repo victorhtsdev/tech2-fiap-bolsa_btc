@@ -25,9 +25,10 @@ resource "aws_iam_role" "tech_role" {
   })
 }
 
+
 resource "aws_iam_policy" "tech_role_policy" {
   name        = var.role_policy_name
-  description = "Permite acesso ao bucket S3 para a Role ${var.role_name}"
+  description = "Permite acesso genérico ao S3 (será atualizado após criação do bucket)"
 
   policy = jsonencode({
     Version = "2012-10-17",
@@ -35,10 +36,7 @@ resource "aws_iam_policy" "tech_role_policy" {
       {
         Effect   = "Allow",
         Action   = ["s3:ListBucket", "s3:GetObject", "s3:PutObject"],
-        Resource = [
-          "arn:aws:s3:::${var.bucket_name}",
-          "arn:aws:s3:::${var.bucket_name}/*"
-        ]
+        Resource = "*"
       }
     ]
   })

@@ -21,9 +21,3 @@ variable "role_policy_name" {
   type        = string
   default     = "TechRoleS3AccessPolicy"
 }
-
-variable "bucket_name" {
-  description = "Nome do bucket S3"
-  type        = string
-  default     = "vhts-fiap-tech-challenge2"
-}
