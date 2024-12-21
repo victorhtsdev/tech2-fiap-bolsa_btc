@@ -16,6 +16,7 @@ resource "aws_s3_bucket_policy" "bucket_policy" {
     Version = "2012-10-17",
     Statement = [
       {
+        # Negar acesso sem transporte seguro
         Effect = "Deny",
         Principal = "*",
         Action    = "s3:*",
@@ -30,11 +31,24 @@ resource "aws_s3_bucket_policy" "bucket_policy" {
         }
       },
       {
+        # Permitir acesso ao grupo Admins
         Effect = "Allow",
         Principal = {
           AWS = [
             "arn:aws:iam::${data.aws_caller_identity.current.account_id}:group/Admins"
           ]
+        },
+        Action = ["s3:GetObject", "s3:PutObject", "s3:ListBucket"],
+        Resource = [
+          "${aws_s3_bucket.bucket.arn}",
+          "${aws_s3_bucket.bucket.arn}/*"
+        ]
+      },
+      {
+        # Permitir acesso à role techRole
+        Effect = "Allow",
+        Principal = {
+          AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/techRole"
         },
         Action = ["s3:GetObject", "s3:PutObject", "s3:ListBucket"],
         Resource = [
