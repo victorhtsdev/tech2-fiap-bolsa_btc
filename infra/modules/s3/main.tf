@@ -3,6 +3,9 @@ data "aws_caller_identity" "current" {}
 resource "aws_s3_bucket" "bucket" {
   bucket = var.bucket_name
 
+  # Forçar exclusão dos objetos antes de destruir o bucket
+  force_destroy = true
+
   tags = {
     Name        = var.bucket_name
     Environment = "Development"
