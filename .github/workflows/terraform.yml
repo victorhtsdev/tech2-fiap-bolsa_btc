@@ -3,10 +3,7 @@ name: Terraform Workflow
 on:
   push:
     branches:
-      - main
-    paths:
-      - 'infra/**'    
-      - '*.tf'       
+      - main  
 
 jobs:
   set-env:
