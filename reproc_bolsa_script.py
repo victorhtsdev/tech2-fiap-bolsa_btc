@@ -24,7 +24,7 @@ AWS_SECRET_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "your_secret_access_key")
 AWS_SESSION_TOKEN = os.getenv("AWS_SESSION_TOKEN", None)
 
 # Target date for reprocessing (format DD-MM-YY)
-target_date = "09-12-24"
+target_date = "10-12-24"
 
 
 def init_webdriver():
