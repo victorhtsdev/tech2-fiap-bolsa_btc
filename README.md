@@ -34,19 +34,21 @@ Este projeto foi desenvolvido como parte do curso de pós-graduação em **Machi
 ## Diagrama do Pipeline
 
 
-
+ ![Diagrama do Pipeline](/documents/tech_challenge_2_diagrama.png)
 ---
 
 ## Resultados Obtidos
 
-O objetivo principal deste trabalho foi desenvolver o pipeline de dados, e não realizar uma análise aprofundada dos dados. No entanto, o notebook `athena_notebook.ipynb` foi utilizado para demonstrar os resultados obtidos a partir dos dados capturados.
+O objetivo principal deste trabalho foi desenvolver o pipeline de dados, e não realizar uma análise aprofundada dos dados. No entanto, o notebook athena_notebook.ipynb foi utilizado para demonstrar os resultados obtidos a partir dos dados capturados.
 
-Por meio do notebook, foi possível observar alguns eventos relevantes na carteira teórica da Bovespa, como:
+Os dados processados pelo pipeline foram armazenados no Amazon S3 e consultados utilizando o AWS Athena, permitindo a execução de consultas SQL diretamente sobre os dados no S3 de forma serverless. O notebook demonstrou como as consultas no Athena foram usadas para explorar e extrair informações relevantes.
+
+O gráfico gerado no notebook ilustra as variações na quantidade teórica total das ações da Bovespa de um dia para o outro, destacando mudanças significativas, como inclusões, exclusões e rebalanceamentos de papéis, capturados no pipeline, como:
 
 - O **lançamento de papéis** da Lojas Renner (LREN3) no dia 13 de dezembro.
-- O **rebalanceamento da carteira teórica** da Bovespa.
+- O **rebalanceamento da carteira teórica** da Bovespa no inicio de janeiro.
 
-
+ ![Diagrama do Pipeline](/documents/notebook_plot.png)
 
 ---
 
