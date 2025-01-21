@@ -175,29 +175,40 @@ if not df_with_max_date.rdd.isEmpty():
         col("atual.tipo"),
         col("atual.qtd_teorica"),
         col("atual.participacao"),
-        F.coalesce(col("atual.participacao") - col("anterior.participacao"), F.lit(0)).alias("variacao_participacao"),
-        F.coalesce(col("atual.qtd_teorica") - col("anterior.qtd_teorica"), F.lit(0)).alias("variacao_qtd_teorica"),
+        F.coalesce(
+            (col("atual.participacao") - col("anterior.participacao")).cast(DecimalType(15, 3)), 
+            F.lit(0).cast(DecimalType(15, 3))
+        ).alias("variacao_participacao"),
+        F.coalesce(
+            (col("atual.qtd_teorica") - col("anterior.qtd_teorica")).cast(LongType()), 
+            F.lit(0).cast(LongType())
+        ).alias("variacao_qtd_teorica"),
         col("anterior.data").alias("data_d-1"),
         col("atual.data"),
         col("atual.codigo")
     )
+
+    # Silver
     silver_df.write \
         .mode("append") \
         .partitionBy("data", "codigo") \
         .parquet(output_path_silver)
+
     repair_table(database_name, silver_table_name)
 
-    # Generate Gold data
+    # Gold
     gold_df = silver_df.groupBy("data", "tipo").agg(
         F.sum(col("qtd_teorica").cast(LongType())).alias("soma_qtd_teorica"),
         F.sum(col("participacao").cast(DecimalType(15, 3))).alias("soma_participacao"),
         F.sum(col("variacao_participacao").cast(DecimalType(15, 3))).alias("soma_variacao_participacao"),
         F.sum(col("variacao_qtd_teorica").cast(LongType())).alias("soma_variacao_qtd_teorica")
     )
+
     gold_df.write \
         .mode("append") \
         .partitionBy("data", "tipo") \
         .parquet(output_path_gold)
+
     repair_table(database_name, gold_table_name)
 
 job.commit()

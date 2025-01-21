@@ -24,7 +24,7 @@ AWS_SECRET_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "your_secret_access_key")
 AWS_SESSION_TOKEN = os.getenv("AWS_SESSION_TOKEN", None)
 
 # Target date for reprocessing (format DD-MM-YY)
-target_date = "10-12-24"
+target_date = "17-01-25"
 
 
 def init_webdriver():
@@ -45,7 +45,7 @@ def init_webdriver():
 
 
 def locate_existing_file(date_str):
-    # Locate a previously downloaded file based on the target date
+   
     current_dir = os.getcwd()
     downloads_path = os.path.join(current_dir, "downloads")
     pattern = f"IBOVDia_{date_str}.csv"
@@ -122,8 +122,7 @@ def upload_to_s3(file_path, s3_prefix, date_partition, is_parquet=False):
             "s3",
             region_name=S3_REGION,
             aws_access_key_id=AWS_ACCESS_KEY,
-            aws_secret_access_key=AWS_SECRET_KEY,
-            aws_session_token=AWS_SESSION_TOKEN
+            aws_secret_access_key=AWS_SECRET_KEY
         )
 
         partition = f"data_carteira={date_partition}"
