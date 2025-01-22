@@ -57,9 +57,3 @@ O gráfico gerado no notebook ilustra as variações na quantidade teórica tota
 ### Victor HTS.
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Perfil-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/victor-hugo-teles-de-santana-359ba260/)
 
----
-
-## Licença
-
-Este projeto é open-source sob a licença [MIT](LICENSE).
-
